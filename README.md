@@ -1,13 +1,13 @@
 #Irreducible Curvature Projection
-================
 
-This module is based on the theoretical results in the paper "Irreducible Motion
+This module implements the curvature projection algorithm, described in the paper "Irreducible Motion
 Planning by Exploiting Linear Linkage Structures"
 
 ## Dependencies
 
  * numpy
  * scipy
+ * matplotlib
 
 ## Definition Linear Linkage
 
@@ -42,11 +42,16 @@ and its curvature.
     python test-visualize-simple-curve.py
 
 
-## 
+## Projection from given file
+
+A simple trajectory is described in data/spheretraj.txt; To visualize the sublinks along the trajectory
+    
+    python scripts/projection_visualizer.py data/spheretraj.txt
+    
+to compute the sublinks along the trajectory and write them to the file data/spheretraj-sublinks.txt invoke:
 
     python scripts/irreducible_sublink_projector.py data/spheretraj.txt data/spheretraj-sublinks.txt
-    python scripts/projection_visualizer.py data/spheretraj.txt
-
+    
 ##Irreducible Motion Planning for Linear Linkages
 
 The core curvature projection algorithm can be found in the python module called IrreducibleProjector. 
@@ -73,3 +78,7 @@ To visualize the configuration at t0
 To compute the configurations over the complete trajectory of L0 and display each configuration for 0.0001s do
 
     P.visualizeLinearLinkageProjection(0.0001)
+
+## Problems
+
+  * Internally, we interpolate the samples by a spline representation. In some cases where the samples are not dense enough, the interpolation might be not optimal. In this case you have the possibility to change the splinePrecision variable in irreducible_projector.py, which controls the precision of the spline interpolation
