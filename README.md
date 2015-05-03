@@ -17,7 +17,8 @@ L0->L1->L2->...->LN, connected by spherical joints
 ![Linear Linkage](https://github.com/orthez/irreducible-curvature-projection/raw/master/images/hierarchy-chain.png "Linear Linkage")
 
 L0 is called the **root link**
-L1->L2->...->LN are called the **sublinks**
+
+L1,L2,...,LN are called the **sublinks**
 
 ## Input
 
@@ -43,7 +44,7 @@ and its curvature.
 
 ## 
 
-    python scripts/irreducible-sublink-projector.py data/spheretraj.txt data/spheretraj-sublinks.txt
+    python scripts/irreducible_sublink_projector.py data/spheretraj.txt data/spheretraj-sublinks.txt
     python scripts/projection_visualizer.py data/spheretraj.txt
 
 ##Irreducible Motion Planning for Linear Linkages
