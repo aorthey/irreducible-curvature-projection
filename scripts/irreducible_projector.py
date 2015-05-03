@@ -154,6 +154,7 @@ def createSpline( t, X):
 
 
 class IrreducibleProjector():
+        splinePrecision = 0.001
 
         def __init__(self):
                 createHomogenousLinearLinkage(N,L,D)
@@ -184,7 +185,7 @@ class IrreducibleProjector():
 
                 XX = np.vstack((Xpre,X))
 
-                tau,tmp = splprep(XX.T,s=0.001)
+                tau,tmp = splprep(XX.T,s=self.splinePrecision)
 
                 ##find starting time and ending time
                 self.tauStart = 0.0
