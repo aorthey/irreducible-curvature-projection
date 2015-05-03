@@ -25,6 +25,21 @@ def extract_numbers(txt):
         for m in re.finditer(r'[-+]?[0-9]*\.?[0-9]+([eE][-+]?[0-9]+)?', txt):
                 yield float(m.group(0))
 
+def writeToFile(P, fnameout):
+        fh = open(fnameout,'w')
+
+        fh.write('## x_1 y_1 z_1 l_0 d_1 ... x_N y_N z_N l_{N-1} d_N\n')
+
+        for i in range(0,Mpts):
+                S = P.getSublinksPositionAtRootPosition(X[i,0:3])
+
+                for SL in S:
+                        fh.write('%.4f %.4f %.4f %.4f %.4f ' % \
+                                        (SL[0],SL[1],SL[2],SL[3],SL[4]))
+
+                fh.write('\n')
+        fh.close()
+
 def rootLinkToSublinks(fname, fnameout):
 
         print "reading in from",fname
@@ -52,24 +67,10 @@ def rootLinkToSublinks(fname, fnameout):
         D = delta1*np.ones((N+1,1))
         D[0]=delta0
         P = IrreducibleProjector(X[:,0:3],L,D)
-        #P.plotLinearLinkageAtT(0.5)
-        #P.plotLinearLinkageAtStart()
-        #P.plotLinearLinkageAtGoal()
+        if fnameout is not None:
+                writeToFile(P, fnameout)
+        return P
 
-        fh = open(fnameout,'w')
-
-        fh.write('## x_1 y_1 z_1 l_0 d_1 ... x_N y_N z_N l_{N-1} d_N\n')
-
-        #P.checkNearestPoints(X[:,0:3])
-        for i in range(0,Mpts):
-                S = P.getSublinksPositionAtRootPosition(X[i,0:3])
-
-                for SL in S:
-                        fh.write('%.4f %.4f %.4f %.4f %.4f ' % \
-                                        (SL[0],SL[1],SL[2],SL[3],SL[4]))
-
-                fh.write('\n')
-        fh.close()
 
 def print_usage():
         print ""
@@ -115,15 +116,13 @@ def print_usage():
         print ""
 
 if __name__ == "__main__":
-        fname = "../data-traj/spheretraj.txt"
-        fnameout = "../data-traj/spheretraj-sublinks.txt"
 
         if len(sys.argv)!=3:
                 print_usage()
                 sys.exit(0)
-
-        fname = sys.argv[1]
-        fnameout = sys.argv[2]
+        else:
+                fname = sys.argv[1]
+                fnameout = sys.argv[2]
 
         rootLinkToSublinks(fname, fnameout)
 

@@ -269,13 +269,13 @@ class IrreducibleProjector():
 
                         print xx,taumin,tmin,dmin
 
-
-
-
         def visualizeLinearLinkageProjection(self, timeToShowLinkage):
                 tstep = 0.05
-                t0 = self.tauStart
                 irrplot = IrreduciblePlotter()
+                [f0,df0,ddf0] = funcEval(self.tau,self.tauStart)
+                [f1,df1,ddf1] = funcEval(self.tau,self.tauEnd)
+                irrplot.setLimits(f0,f1)
+                t0 = self.tauStart
                 while t0<=self.tauEnd:
                         [theta,gamma] = self.getJointAnglesAtT(t0)
                         [f0,df0,ddf0] = funcEval(self.tau,t0)
