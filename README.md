@@ -1,4 +1,4 @@
-#irreducible-curvature-projection
+#Irreducible Curvature Projection
 ================
 
 This module is based on the theoretical results in the paper "Irreducible Motion
@@ -14,7 +14,7 @@ Planning by Exploiting Linear Linkage Structures"
 A linear linkage is a mechanical system with N+1 links, arranged as
 L0->L1->L2->...->LN, connected by spherical joints
 
-![Linear Linkage](https://github.com/orthez/irreducible-curvature-projection/raw/master/images/hierarchy-chain.pdf "Linear Linkage")
+![Linear Linkage](https://github.com/orthez/irreducible-curvature-projection/raw/master/images/hierarchy-chain.png "Linear Linkage")
 
 L0 is called the **root link**
 L1->L2->...->LN are called the **sublinks**
@@ -37,14 +37,14 @@ An example trajectory can be found in data/spheretraj.txt, which contains a list
 of discrete x,y,z positions of a spherical root link, together with its radius
 and its curvature. 
 
-   python test-reduce-simple-curve.py
-   python test-visualize-simple-curve.py
+    python test-reduce-simple-curve.py
+    python test-visualize-simple-curve.py
 
 
 ## 
 
-   python scripts/irreducible-sublink-projector.py data/spheretraj.txt data/spheretraj-sublinks.txt
-   python scripts/projection_visualizer.py data/spheretraj.txt
+    python scripts/irreducible-sublink-projector.py data/spheretraj.txt data/spheretraj-sublinks.txt
+    python scripts/projection_visualizer.py data/spheretraj.txt
 
 ##Irreducible Motion Planning for Linear Linkages
 
@@ -52,7 +52,7 @@ The core curvature projection algorithm can be found in the python module called
 
 An example for the left arm of the humanoid robot HRP-2. We have a linear
 linkage structure L0->L1->L2->L3, with l0=0.25m and delta_0 = 0.08m. 
-![Arm HRP-2](https://github.com/orthez/irreducible-curvature-projection/raw/master/images/arm_linear_linkage.pdf "Arm as Linear Linkage")
+![Arm HRP-2](https://github.com/orthez/irreducible-curvature-projection/raw/master/images/arm_linear_linkage.png "Arm as Linear Linkage")
 
 Let X be the discrete set of locations of L0 over time. Then we can compute the
 irreducible configurations in a python script as
