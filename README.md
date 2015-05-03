@@ -1,4 +1,4 @@
-#irreducible-curvature-projection
+#Irreducible Curvature Projection
 ================
 
 This module is based on the theoretical results in the paper "Irreducible Motion
@@ -37,14 +37,14 @@ An example trajectory can be found in data/spheretraj.txt, which contains a list
 of discrete x,y,z positions of a spherical root link, together with its radius
 and its curvature. 
 
-   python test-reduce-simple-curve.py
-   python test-visualize-simple-curve.py
+    python test-reduce-simple-curve.py
+    python test-visualize-simple-curve.py
 
 
 ## 
 
-   python scripts/irreducible-sublink-projector.py data/spheretraj.txt data/spheretraj-sublinks.txt
-   python scripts/projection_visualizer.py data/spheretraj.txt
+    python scripts/irreducible-sublink-projector.py data/spheretraj.txt data/spheretraj-sublinks.txt
+    python scripts/projection_visualizer.py data/spheretraj.txt
 
 ##Irreducible Motion Planning for Linear Linkages
 
