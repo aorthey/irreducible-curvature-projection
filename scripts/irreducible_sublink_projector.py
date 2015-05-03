@@ -25,7 +25,11 @@ def extract_numbers(txt):
         for m in re.finditer(r'[-+]?[0-9]*\.?[0-9]+([eE][-+]?[0-9]+)?', txt):
                 yield float(m.group(0))
 
-def writeToFile(P, fnameout):
+def writeToFile(P, X, fnameout):
+
+        Mpts = X.shape[0]
+        print "read",Mpts,"data points along swept sphere"
+
         fh = open(fnameout,'w')
 
         fh.write('## x_1 y_1 z_1 l_0 d_1 ... x_N y_N z_N l_{N-1} d_N\n')
@@ -56,8 +60,6 @@ def rootLinkToSublinks(fname, fnameout):
                         X.append(L0)
 
         X = np.array(X)
-        Mpts = X.shape[0]
-        print "read",Mpts,"data points along swept sphere"
         kappa = X[0,3]
         delta0 = X[0,4]
         delta0 = 0.05
@@ -68,7 +70,7 @@ def rootLinkToSublinks(fname, fnameout):
         D[0]=delta0
         P = IrreducibleProjector(X[:,0:3],L,D)
         if fnameout is not None:
-                writeToFile(P, fnameout)
+                writeToFile(P, X, fnameout)
         return P
 
 
