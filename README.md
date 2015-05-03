@@ -58,6 +58,7 @@ The core curvature projection algorithm can be found in the python module called
 
 An example for the left arm of the humanoid robot HRP-2. We have a linear
 linkage structure L0->L1->L2->L3, with l0=0.25m and delta_0 = 0.08m. 
+
 ![Arm HRP-2](https://github.com/orthez/irreducible-curvature-projection/raw/master/images/arm_linear_linkage.png "Arm as Linear Linkage")
 
 Let X be the discrete set of locations of L0 over time. Then we can compute the
