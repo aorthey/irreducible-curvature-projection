@@ -3,6 +3,9 @@
 This module implements the curvature projection algorithm, described in the paper "Irreducible Motion
 Planning by Exploiting Linear Linkage Structures"
 
+![Linear Linkage](https://github.com/orthez/irreducible-curvature-projection/raw/master/images/snake.png "Curvature Projection") 
+![Linear Linkage](https://github.com/orthez/irreducible-curvature-projection/raw/master/images/hrp2.png "Curvature Projection") 
+
 ## Dependencies
 
  * numpy
