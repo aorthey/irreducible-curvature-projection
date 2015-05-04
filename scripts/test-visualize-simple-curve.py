@@ -10,4 +10,3 @@ if __name__ == '__main__':
         P = rootLinkToSublinks(fname, None)
         deltaT = 0.001
         P.visualizeLinearLinkageProjection(deltaT)
-
