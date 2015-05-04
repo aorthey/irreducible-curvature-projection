@@ -20,17 +20,23 @@ L0 is called the **root link**
 
 L1,L2,...,LN are called the **sublinks**
 
+The radii are called *D_0,...,D_N*
+
+The length between links is denoted by *L_1,...,L_N*
+
+The configuration of the linkage is denoted by *T_1,...,T_N*
+
 ## Input
 
 To run the algorithm, we need the following data
 
- * the trajectory of the root link L0 as discrete samples 
- * length L between links
- * radius D of all links
+ * the trajectory of the root link L0 as discrete samples in the form (x,y,z)
+ * *L_1,...,L_N*
+ * *D_0,...,D_N*
 
 ## Output
 
- * the joint configuration at each instance $t \in [0,1]$
+ * the joint configuration *T1,...,TN* at each instance $t \in [0,1]$
 
 ## Fast Start
 
