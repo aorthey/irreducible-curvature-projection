@@ -7,10 +7,10 @@ import sys
 
 def computeNumberOfLinksFromCurvature(kappa, delta0):
         ## kappa -> N,l0
-        delta1 = 0.9*delta0
-        theta = pi/3
+        delta1 = 0.5*delta0
+        theta = pi/2
         NL = 2*sin(theta)/kappa
-        lmin = 2*(delta0+delta1)
+        lmin = 1*(delta0+delta1)
         N = floor(NL/lmin)
         l0 = floor(100*NL/N)/100
 
@@ -32,7 +32,7 @@ def writeToFile(P, X, fnameout):
 
         fh = open(fnameout,'w')
 
-        fh.write('## x_1 y_1 z_1 l_0 d_1 ... x_N y_N z_N l_{N-1} d_N\n')
+        fh.write('## x_0 y_0 z_0 TMP d_0 x_1 y_1 z_1 l_0 d_1 ... x_N y_N z_N l_{N-1} d_N\n')
 
         for i in range(0,Mpts):
                 S = P.getSublinksPositionAtRootPosition(X[i,0:3])
@@ -57,12 +57,12 @@ def rootLinkToSublinks(fname, fnameout):
         for i in range(0,M):
                 L0 = list(extract_numbers(lines[i]))
                 if len(L0)==5:
+                        print L0
                         X.append(L0)
 
         X = np.array(X)
         kappa = X[0,3]
         delta0 = X[0,4]
-        delta0 = 0.05
         [N,l0,delta1] = computeNumberOfLinksFromCurvature(kappa, delta0)
 
         L = l0*np.ones((N,1))

@@ -36,5 +36,5 @@ if __name__ == "__main__":
                 froot = sys.argv[1]
 
         P = rootLinkToSublinks(froot, None)
-        deltaT = 0.001
+        deltaT = 0.0001
         P.visualizeLinearLinkageProjection(deltaT)

@@ -30,6 +30,8 @@ def drawCylinder(ax,p1,p2,linewidth=5,style='-k'):
 
 
 class IrreduciblePlotter():
+        elev=92
+        azim=43
         def __init__(self):
                 self.fig=figure(1)
                 self.ax = self.fig.gca(projection='3d')
@@ -78,6 +80,14 @@ class IrreduciblePlotter():
                 self.ax.set_aspect('equal', 'datalim')
                 plt.show()
 
+        def adjustLimit(self, xmin, xmax):
+                minimumScale = 0.5
+                if np.linalg.norm(xmin-xmax) <= minimumScale:
+                        c = xmax - xmin
+                        xmax = c+minimumScale/2
+                        xmin = c-minimumScale/2
+                return [xmin,xmax]
+
         def setLimits(self,f0,f1):
                 self.xmin = min(f0[0],f1[0])
                 self.xmax = max(f0[0],f1[0])
@@ -85,23 +95,18 @@ class IrreduciblePlotter():
                 self.ymax = max(f0[1],f1[1])
                 self.zmin = min(f0[2],f1[2])
                 self.zmax = max(f0[2],f1[2])
+
+                [self.zmin,self.zmax] = self.adjustLimit(self.zmin, self.zmax)
+
                 self.ax.set_xlim((self.xmin,self.xmax))
                 self.ax.set_ylim((self.ymin,self.ymax))
                 self.ax.set_zlim((self.zmin,self.zmax))
 
         def plotLinearLinkagePause(self,tau, t0, t1, L, D, p, timeToShowLinkage):
-                #xmin, xmax = self.ax.get_xlim()
-                #ymin, ymax = self.ax.get_ylim()
-                #zmin, zmax = self.ax.get_zlim()
                 plt.clf()
                 self.__plotSpheres(tau,t0,t1,L,D,p)
-                #if setaspect:
-                #        self.ax.set_aspect('equal', 'datalim')
-                #else:
-                #        self.ax.set_xlim((xmin,xmax))
-                #        self.ax.set_ylim((ymin,ymax))
-                #        self.ax.set_zlim((zmin,zmax))
                 self.ax.set_xlim((self.xmin,self.xmax))
                 self.ax.set_ylim((self.ymin,self.ymax))
                 self.ax.set_zlim((self.zmin,self.zmax))
+                self.ax.view_init(self.elev, self.azim)
                 plt.pause(timeToShowLinkage)

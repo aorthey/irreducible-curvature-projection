@@ -218,7 +218,6 @@ class IrreducibleProjector():
                 spheres = forwardKinematics(f0,df0,ddf0,theta,gamma,self.L,self.D)
                 irrplot.plotLinearLinkage(self.tau, self.tauStart, self.tauEnd, self.L, self.D, spheres)
 
-
         def plotLinearLinkageAtStart(self):
                 return self.plotLinearLinkageAtT(self.tauStart)
         def plotLinearLinkageAtGoal(self):
@@ -267,7 +266,6 @@ class IrreducibleProjector():
                                         tmin = t
                                         taumin = funcEval(self.tau,t)[0]
                                 t = t+0.001
-
                         print xx,taumin,tmin,dmin
 
         def visualizeLinearLinkageProjection(self, timeToShowLinkage):
