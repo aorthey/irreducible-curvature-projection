@@ -32,9 +32,11 @@ def writeToFile(P, X, fnameout):
 
         fh = open(fnameout,'w')
 
-        fh.write('## x_0 y_0 z_0 TMP d_0 x_1 y_1 z_1 l_0 d_1 ... x_N y_N z_N l_{N-1} d_N\n')
+        fh.write('## x_0 y_0 z_0 * d_0 x_1 y_1 z_1 l_0 d_1 ... x_N y_N z_N l_{N-1} d_N\n')
 
         for i in range(0,Mpts):
+                fh.write('%.4f %.4f %.4f %.4f %.4f ' % \
+                                (X[i,0],X[i,1],X[i,2],0.0,X[i,4]))
                 S = P.getSublinksPositionAtRootPosition(X[i,0:3])
 
                 for SL in S:
