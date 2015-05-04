@@ -63,16 +63,14 @@ class IrreduciblePlotter():
                 for i in range(0,N):
                         self.__drawSphere(p[i,0],p[i,1],p[i,2],D[i])
                 
-                #plotArrowFromTo(tau,dtau,style='k')
-
                 plt.plot([p[0,0],p[0,0]+xe[0]],[p[0,1],p[0,1]+xe[1]],[p[0,2],p[0,2]+xe[2]],'-k',linewidth=1)
                 plt.plot([p[0,0],p[0,0]+ye[0]],[p[0,1],p[0,1]+ye[1]],[p[0,2],p[0,2]+ye[2]],'-k',linewidth=1)
                 plt.plot([p[0,0],p[0,0]+ze[0]],[p[0,1],p[0,1]+ze[1]],[p[0,2],p[0,2]+ze[2]],'-k',linewidth=1)
 
-                #plotArrowFromTo(tau,ddtau,style='g')
                 self.ax.set_xlabel('X')
                 self.ax.set_ylabel('Y')
                 self.ax.set_zlabel('Z')
+                self.ax.view_init(self.elev, self.azim)
 
         def plotLinearLinkage(self,tau, t0, t1, L, D, p):
                 plt.clf()
@@ -95,9 +93,7 @@ class IrreduciblePlotter():
                 self.ymax = max(f0[1],f1[1])
                 self.zmin = min(f0[2],f1[2])
                 self.zmax = max(f0[2],f1[2])
-
                 [self.zmin,self.zmax] = self.adjustLimit(self.zmin, self.zmax)
-
                 self.ax.set_xlim((self.xmin,self.xmax))
                 self.ax.set_ylim((self.ymin,self.ymax))
                 self.ax.set_zlim((self.zmin,self.zmax))
@@ -108,5 +104,4 @@ class IrreduciblePlotter():
                 self.ax.set_xlim((self.xmin,self.xmax))
                 self.ax.set_ylim((self.ymin,self.ymax))
                 self.ax.set_zlim((self.zmin,self.zmax))
-                self.ax.view_init(self.elev, self.azim)
                 plt.pause(timeToShowLinkage)

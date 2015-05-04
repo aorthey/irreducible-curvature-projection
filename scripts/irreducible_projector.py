@@ -9,29 +9,41 @@ from scipy.misc import derivative
 from irreducible_util import *
 from irreducible_plotter import *
 
-def computeThetaGamma(f0, df0, ddf0, dddf0, ft, dft, ddft):
-
+def computeRootLinkRotation(f0, df0, ddf0, dddf0):
         AB_R = np.zeros((3,3))
         AB_R[0,:] = [ np.dot(df0,xe), np.dot(ddf0,xe), np.dot(dddf0,xe)]
         AB_R[1,:] = [ np.dot(df0,ye), np.dot(ddf0,ye), np.dot(dddf0,ye)]
         AB_R[2,:] = [ np.dot(df0,ze), np.dot(ddf0,ze), np.dot(dddf0,ze)]
+        return AB_R
+
+def computeThetaGamma(f0, ft, l, R):
 
         pb = ft-f0
         pbn = pb/np.linalg.norm(pb)
-        pa = np.dot(AB_R.T,pbn)
+        pa = np.dot(R.T,pbn)
 
         xl = np.array((-1,0,0))
         [theta,gamma] = getZYsphericalRot(pa, xl)
 
         BC_R = np.dot(Ry(gamma),Rz(theta))
 
+        R = np.dot(R, BC_R)
         ### compute the frame at t
-        dftnew = np.dot(AB_R,np.dot(BC_R,np.array((1,0,0))))
-        ddftnew = np.dot(AB_R,np.dot(BC_R,np.array((0,1,0))))
-        dddftnew = np.dot(AB_R,np.dot(BC_R,np.array((0,0,1))))
+        dftnew = np.dot(R,np.array((1,0,0)))
+        ddftnew = np.dot(R,np.array((0,1,0)))
+        dddftnew = np.dot(R,np.array((0,0,1)))
 
-        v = dftnew
-        return [theta,gamma,dftnew,ddftnew,dddftnew]
+        ##check results
+        dd = np.linalg.norm(f0-ft)
+        epsilon = 0.01
+        if np.linalg.norm(dd-l) > epsilon:
+                print "distance between points on trajectory bigger than length between links"
+                print "distance between pts: ",dd
+                print "distance between links: ",l
+                print "epsilon precision:",epsilon
+                sys.exit(0)
+
+        return [theta,gamma,R]
 
 def computeThetaGammaFromTauNgeneralized(f,t0,length,delta):
         N = len(delta)
@@ -45,55 +57,25 @@ def computeThetaGammaFromTauNgeneralized(f,t0,length,delta):
         assert( np.dot( dfcur,dddfcur) <= 0.001)
         assert( np.dot(ddfcur,dddfcur) <= 0.001)
 
+        R = computeRootLinkRotation(fcur,dfcur,ddfcur,dddfcur)
+
         for i in range(0,N-1):
                 t = tcur
-
                 while np.linalg.norm(fcur-funcEval(f,t)[0]) < length[i]:
-                        t = t-0.01
+                        t = t-0.0001
         
                 tnext = t
                 [fnext,dfnext,ddfnext] = funcEval(f,tnext)
 
-                [theta[i],gamma[i],dfnext,ddfnext,dddfnext] = computeThetaGamma(fcur,
-                                dfcur, ddfcur, dddfcur, fnext, dfnext, ddfnext)
+                #[theta[i],gamma[i],dfnext,ddfnext,dddfnext] = computeThetaGamma(fcur,
+                                #dfcur, ddfcur, dddfcur, fnext, dfnext, ddfnext)
+                [theta[i],gamma[i],R] = computeThetaGamma(fcur, fnext, length[i], R)
 
                 fcur = fnext
-                dfcur = dfnext
-                ddfcur = ddfnext
-                dddfcur = np.cross(dfnext,ddfnext)
+                #dfcur = dfnext
+                #ddfcur = ddfnext
+                #dddfcur = np.cross(dfnext,ddfnext)
                 tcur = tnext
-
-        return [theta,gamma]
-
-def computeThetaGammaFromTau(f,t0,length,delta):
-        N = len(delta)
-        theta = np.zeros((N-1,1))
-        gamma = np.zeros((N-1,1))
-
-        [f0,df0,ddf0] = funcEval(f,t0)
-        dddf0 = np.cross(df0,ddf0)
-
-        assert( np.dot(df0,ddf0) <= 0.001)
-        assert( np.dot(df0,dddf0) <= 0.001)
-        assert( np.dot(ddf0,dddf0) <= 0.001)
-
-        t = t0
-        while np.linalg.norm(f0-funcEval(f,t)[0]) < length[0]:
-                t = t-0.01
-        
-        t1 = t
-        [ft1,dft1,ddft1] = funcEval(f,t1)
-
-        [theta[0],gamma[0],ndft1,nddft1,ndddft1] = computeThetaGamma(f0, df0, ddf0, dddf0, ft1, dft1, ddft1)
-
-        t = t1
-        while np.linalg.norm(ft1-funcEval(f,t)[0]) < length[0]:
-                t = t-0.01
-
-        t2 = t
-        [ft2,dft2,ddft2] = funcEval(f,t2)
-
-        [theta[1],gamma[1],nd,ndd,nddd] = computeThetaGamma(ft1, ndft1, nddft1, ndddft1, ft2, dft2, ddft2)
 
         return [theta,gamma]
 
@@ -244,7 +226,6 @@ class IrreducibleProjector():
                 ### get time value at which function is equal to froot
                 t = self.tauStart
                 while np.linalg.norm(froot-funcEval(self.tau,t)[0]) > 0.03:
-                        #print np.linalg.norm(froot-funcEval(self.tau,t)[0]),t,self.evaluateAtT(t),froot
                         t = t+0.001
                         if t>self.tauEnd:
                                 break
