@@ -200,6 +200,18 @@ class IrreducibleProjector():
                 spheres = forwardKinematics(f0,df0,ddf0,theta,gamma,self.L,self.D)
                 irrplot.plotLinearLinkage(self.tau, self.tauStart, self.tauEnd, self.L, self.D, spheres)
 
+        def plotLinearLinkageAtTLimits(self, t0, xmin, xmax, ymin, ymax, zmin, zmax):
+                if t0 < self.tauStart or t0 > self.tauEnd:
+                        print "can only evaluate in interval [",self.tauStart,",",self.tauEnd,"]"
+                        sys.exit(0)
+
+                irrplot = IrreduciblePlotter()
+                [theta,gamma] = self.getJointAnglesAtT(t0)
+                [f0,df0,ddf0] = funcEval(self.tau,t0)
+                spheres = forwardKinematics(f0,df0,ddf0,theta,gamma,self.L,self.D)
+                irrplot.setLimitsManually(xmin,xmax,ymin,ymax,zmin,zmax)
+                irrplot.plotLinearLinkageLimits(self.tau, self.tauStart, self.tauEnd, self.L, self.D, spheres)
+
         def plotLinearLinkageAtStart(self):
                 return self.plotLinearLinkageAtT(self.tauStart)
         def plotLinearLinkageAtGoal(self):

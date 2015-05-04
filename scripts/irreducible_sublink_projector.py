@@ -10,7 +10,6 @@ def computeNumberOfLinksFromCurvature(kappa, delta0):
         delta1 = 0.6*delta0
         theta = pi/2
         NL = 2*sin(theta)/kappa
-        #####
         lmin = 0.9*(delta0+delta1)
         N = floor(NL/lmin)
         l0 = floor(100*NL/N)/100

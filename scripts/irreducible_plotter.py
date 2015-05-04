@@ -78,6 +78,14 @@ class IrreduciblePlotter():
                 self.ax.set_aspect('equal', 'datalim')
                 plt.show()
 
+        def plotLinearLinkageLimits(self,tau, t0, t1, L, D, p):
+                plt.clf()
+                self.__plotSpheres(tau,t0,t1,L,D,p)
+                self.ax.set_xlim((self.xmin,self.xmax))
+                self.ax.set_ylim((self.ymin,self.ymax))
+                self.ax.set_zlim((self.zmin,self.zmax))
+                plt.show()
+
         def adjustLimit(self, xmin, xmax):
                 minimumScale = 0.5
                 if np.linalg.norm(xmin-xmax) <= minimumScale:
@@ -87,12 +95,23 @@ class IrreduciblePlotter():
                 return [xmin,xmax]
 
         def setLimits(self,f0,f1):
-                self.xmin = min(f0[0],f1[0])
-                self.xmax = max(f0[0],f1[0])
-                self.ymin = min(f0[1],f1[1])
-                self.ymax = max(f0[1],f1[1])
-                self.zmin = min(f0[2],f1[2])
-                self.zmax = max(f0[2],f1[2])
+                xmin = min(f0[0],f1[0])
+                xmax = max(f0[0],f1[0])
+                ymin = min(f0[1],f1[1])
+                ymax = max(f0[1],f1[1])
+                zmin = min(f0[2],f1[2])
+                zmax = max(f0[2],f1[2])
+                self.setLimitsManually(xmin,xmax,ymin,ymax,zmin,zmax)
+
+        def setLimitsManually(self,xmin,xmax,ymin,ymax,zmin,zmax):
+                self.xmin = xmin
+                self.xmax = xmax
+                self.ymin = ymin
+                self.ymax = ymax
+                self.zmin = zmin
+                self.zmax = zmax
+                [self.xmin,self.xmax] = self.adjustLimit(self.xmin, self.xmax)
+                [self.ymin,self.ymax] = self.adjustLimit(self.ymin, self.ymax)
                 [self.zmin,self.zmax] = self.adjustLimit(self.zmin, self.zmax)
                 self.ax.set_xlim((self.xmin,self.xmax))
                 self.ax.set_ylim((self.ymin,self.ymax))
