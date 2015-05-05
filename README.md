@@ -62,9 +62,7 @@ to compute the sublinks along the trajectory and write them to the file data/sph
 
     python scripts/irreducible_sublink_projector.py data/spheretraj.txt data/spheretraj-sublinks.txt
     
-##Irreducible Motion Planning for Linear Linkages
-
-The core curvature projection algorithm can be found in the python module called IrreducibleProjector. 
+##Irreducible Motion Planning for Humanoid Manipulators
 
 An example for the left arm of the humanoid robot HRP-2. We have a linear
 linkage structure L0->L1->L2->L3, with l0=0.25m and delta_0 = 0.08m. 
