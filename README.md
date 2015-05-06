@@ -95,7 +95,3 @@ To visualize the configuration at t0
 To compute the configurations over the complete trajectory of L0 and display each configuration for 0.0001s do
 
     P.visualizeLinearLinkageProjection(0.0001)
-
-## Problems
-
-  * Internally, we interpolate the samples by a spline representation. In some cases where the samples are not dense enough, the interpolation might be not optimal. In this case you have the possibility to change the splinePrecision variable in irreducible_projector.py, which controls the precision of the spline interpolation
