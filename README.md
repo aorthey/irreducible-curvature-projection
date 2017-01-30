@@ -54,15 +54,7 @@ To run the algorithm, we need the following data
 
 An example trajectory can be found in data/spheretraj.txt, which contains a list
 of discrete x,y,z positions of a spherical root link, together with its radius
-and its curvature. 
-
-    python test-reduce-simple-curve.py
-    python test-visualize-simple-curve.py
-
-
-## Projection from given file
-
-A simple trajectory is described in data/spheretraj.txt; To visualize the sublinks along the trajectory
+and its curvature. To visualize the sublinks along the trajectory
     
     python scripts/projection_visualizer.py data/spheretraj.txt
     
